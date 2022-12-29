@@ -1,0 +1,26 @@
+spring :
+    web:
+        resources:
+            static-locations: META-INF:/resources, classpath:/resources, classpath:/static, classpath:/static/vue, classpath:/templates, classpath:/templates/vue
+
+    #datasource :
+    #    url : jdbc:mysql://database-1.cpsqavk4w2uv.us-east-1.rds.amazonaws.com:3306/firstappdb
+    #    username : admin
+    #    password : aassdd11$
+    jpa :
+        properties :
+            hibernate :
+                format_sql:true
+        hibernate :
+            ddl-auto : update    
+            # ddl-auto - @Entity 테이블 정보를 실제 DB에 반영 할건지 설정(create/update/none..)
+        show-sql : true
+
+server:
+    port: 8080
+    
+#https://goodteacher.tistory.com/89
+
+
+
+
