@@ -21,6 +21,7 @@ import com.example.vscapp01.dto.SpringUser;
 public class CustomAuthenticationProvider implements AuthenticationProvider{
     //private static Logger logger = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
     private Logger logger = LogManager.getLogger(CustomAuthenticationProvider.class);
+    
     @Autowired
     private UserDetailsService userDetailsService;
 

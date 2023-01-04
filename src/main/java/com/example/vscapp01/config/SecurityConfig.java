@@ -1,39 +1,34 @@
 package com.example.vscapp01.config;
 
-import java.security.AuthProvider;
-import java.util.Arrays;
-
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.example.vscapp01.service.MemberService;
+import com.example.vscapp01.Components.JwtTokenProvider;
 import com.example.vscapp01.service.MemberServiceImpl;
-
-import lombok.RequiredArgsConstructor;
-
 //https://nahwasa.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8-Spring-Security-%EA%B8%B0%EB%B3%B8-%EC%84%B8%ED%8C%85-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0
 //https://zeroco.tistory.com/101
 
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
+//@ComponentScan(basePackages = {"com.example.vscapp01.components"})
 public class SecurityConfig{
 
+    private final JwtTokenProvider jwtTokenProvider;
+    
     // @Autowired
     // private MemberService memberService;
     
@@ -41,13 +36,18 @@ public class SecurityConfig{
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new MemberServiceImpl();
+        return new MemberServiceImpl(jwtTokenProvider);
     }
 
     //passwordEncoder
     @Bean
     public BCryptPasswordEncoder encodePassword() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     // @Bean
@@ -101,6 +101,8 @@ public class SecurityConfig{
         .antMatchers("/css/**")
         .antMatchers("/js/**")
         .antMatchers("/resources/**")
+        .antMatchers("/static/**")
+        .antMatchers("/bootstrap/**")
         .antMatchers("*.ico");// Resources 파일이나 Javascript 파일 경로 무시 
 	} 
 
@@ -116,11 +118,17 @@ public class SecurityConfig{
 
         //https://bamdule.tistory.com/53
         //http 요청에 대해서 모든 사용자가 /** 경로로 요청할 수 있지만, /member/** , /admin/** 경로는 인증된 사용자만 요청이 가능합니다. 
+
+
+        http.cors()
+            .and();
+
         http.authorizeRequests()
             
             .antMatchers("/").permitAll()
-            .antMatchers("/logIn", "/signUp", "/css/**", "/js/**", "/resources/**").permitAll()
+            .antMatchers("/logIn", "/signUp", "/css/**", "/js/**", "/resources/**","/static/**", "/bootstrap/**").permitAll()
             .antMatchers("/api/**").permitAll()
+            .antMatchers("/user/**").hasRole("USER")
             //.antMatchers("/member/**").hasAnyRole("USER", "ADMIN")
 			//.antMatchers("/admin/**").hasRole("ADMIN")
             //.antMatchers("/member/**").authenticated()
@@ -142,16 +150,29 @@ public class SecurityConfig{
             .permitAll();
 
         http.csrf().disable();     
-            
+        //http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+        //http.httpBasic().disable(); // 일반적인 루트가 아닌 다른 방식으로 요청시 거절, header에 id, pw가 아닌 token(jwt)을 달고 간다. 그래서 basic이 아닌 bearer를 사용한다.
+
+        
+
 	 	http.logout()
 	 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	 		.logoutSuccessUrl("/logIn")
 	 		.invalidateHttpSession(true)
             .permitAll();
         
-            //권한이 없는 사용자가 접근했을 경우 이동할 경로를 지정합니다.
+        //권한이 없는 사용자가 접근했을 경우 이동할 경로를 지정합니다.
         http.exceptionHandling()
             .accessDeniedPage("/denied");
+            
+        //JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행하겠다는 설정이다.
+        // JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 전에 넣는다
+        http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+        
+        //JWT를 사용하기 때문에 세션을 사용하지 않는다는 설정이다. https://gksdudrb922.tistory.com/217
+        // + 토큰에 저장된 유저정보를 활용하여야 하기 때문에 CustomUserDetailService 클래스를 생성합니다.
+        //세션을 사용하지 않는다고 설정한다.
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         return http.build();
     }

@@ -1,12 +1,14 @@
 package com.example.vscapp01.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.example.vscapp01.dto.MemberDto;
 import com.example.vscapp01.entity.MemberEntity;
 
 @Repository
@@ -28,4 +30,8 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long>{
     List<MemberEntity> searchParamRepo(@Param("name") String name);
     //Controller > Service > Impl > Dao > Mapper(xml)
     
+    Optional<MemberDto> findByEmail(String email);
+    boolean existsByEmail(String email);
+
+    MemberEntity findByMemberId(String username);
 }

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.example.vscapp01.dto.MemberDto;
-import com.example.vscapp01.entity.MemberEntity;
+//import com.example.vscapp01.entity.MemberEntity;
 
 
 @Mapper
@@ -26,5 +26,10 @@ public interface MemberMapper {
 
 
     public Integer createMember(MemberDto memberDto);
+
+
+
+    public MemberDto findById(Long memberId);
+    public MemberDto findByEmail(String memberId);
 
 }

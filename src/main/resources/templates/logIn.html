@@ -1,14 +1,239 @@
 <!--로그인 페이지-->
 <!-- login.html-->
 <!DOCTYPE html>
+<html lang="en">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+
+
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3.0.6/dist/vuetify.min.css"> -->
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vuetify@3.0.6/dist/vuetify.min.js"></script> -->
+
+<!-- <html xmlns:th="http://www.thymeleaf.org" lang="en"> -->
+
+
+
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title></title>
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"> -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/vuetify@3.0.6/dist/vuetify.min.css" rel="stylesheet"> -->
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script> -->
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script> -->
+    <!-- <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+    <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <!-- https://bootsnipp.com/tags/login?page=1 -->
+    <!-- <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet"> -->
+
+
+    <style>
+        /* body {
+            margin: 0;
+            padding: 0;
+            background-color: #17a2b8;
+            height: 100vh;
+        } */
+        /* #login .container #login-row #login-column #login-box {
+            margin-top: 120px;
+            max-width: 600px;
+            height: 320px;
+            border: 1px solid #9C9C9C;
+            background-color: #EAEAEA;
+        }
+        #login .container #login-row #login-column #login-box #login-form {
+            padding: 20px;
+        }
+        #login .container #login-row #login-column #login-box #login-form #register-link {
+            margin-top: -85px;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+            border-radius: 5px;
+            }
+            
+            body {
+            margin: 0;
+            background-color: #1BBC9B;
+            }
+            
+            .login-form {
+                width: 300px;
+                background-color: #EEEFF1;
+                margin-right: auto;
+                margin-left: auto;
+                margin-top: 50px;
+                padding: 20px;
+                text-align: center;
+                border: none;
+                
+            }
+            
+            .text-field {
+                font-size: 14px;
+                padding: 10px;
+                border: none;
+                width: 260px;
+                margin-bottom: 10px;
+            
+            }
+            
+            .submit-btn {
+            font-size: 14px;
+            border: none;
+            padding: 10px;
+            width: 260px;
+            background-color: #1BBC9B;
+            margin-bottom: 30px;
+            color: white;
+            }
+            
+            .links {
+                text-align: center;
+            }
+            
+            .links a {
+            font-size: 12px;
+            color: #9B9B9B;
+            }
+             */
+    </style>
 </head>
+
 <body>
-<div class="container">
+    
+
+    <!-- <div class="login-form">
+        <form>
+          <input type="text" name="email" class="text-field" placeholder="아이디">
+          <input type="password" name="password" class="text-field" placeholder="비밀번호">
+          <input type="submit" value="로그인" class="submit-btn">
+        </form>
+     
+        <div class="links">
+          <a href="#">들어와볼껴?</a>
+        </div>
+      </div> -->
+
+    <!-- <div id="login">
+        <h3 class="text-center text-white pt-5">Login form</h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" action="" method="post">
+                            <h3 class="text-center text-info">Login</h3>
+                            <div class="form-group">
+                                <label for="username" class="text-info">Username:</label><br>
+                                <input type="text" name="username" id="username" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-info">Password:</label><br>
+                                <input type="text" name="password" id="password" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                            </div>
+                            <div id="register-link" class="text-right">
+                                <a href="#" class="text-info">Register here</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <div id="app"> -->
+        <!-- <h1>```````````</h1> -->
+        <!-- {{message}} -->
+
+        <!-- <com-2></com-2> -->
+
+        <!-- <p> -->
+            <!-- <router-link to="/login">login</router-link> -->
+            <!-- <router-link to="/reg">reg</router-link> -->
+            
+        <!-- </p> -->
+        
+        <!-- <router-view></router-view> -->
+        <!-- <h1>````````````````</h1> -->
+        <!-- <logIn></logIn> -->
+    <!-- </div> -->
+
+    <div id="app">
+
+        <v-app id="inspire">
+            <v-main class="blue-grey lighten-4">
+              <!-- Login Component -->
+              <v-container style="max-width: 450px" fill-height>
+                <v-layout align-center row wrap>
+                  <v-flex xs12>
+                    <v-card>
+                      <div class="pa-10">
+                        <h1 style="text-align: center" class="mb-10">Login</h1>
+                        <form>
+                          <v-text-field
+                            label="ID"
+                            prepend-inner-icon="mdi-account"
+                          ></v-text-field>
+                          <v-text-field
+                            prepend-inner-icon="mdi-lock"
+                            type="password"
+                            label="Password"
+                          >
+                          </v-text-field>
+                          <v-btn
+                            type="submit"
+                            color="blue lighten-1 text-capitalize"
+                            depressed
+                            large
+                            block
+                            dark
+                            class="mb-3"
+                          >
+                            Login
+                          </v-btn>
+                          <v-btn
+                            @click="addUserShow"
+                            color="blue lighten-1 text-capitalize"
+                            depressed
+                            large
+                            block
+                            dark
+                          >
+                            Sign Up
+                          </v-btn>
+                        </form>
+                      </div>
+                    </v-card>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-main>
+          </v-app>
+
+        <!-- <div>
+          <router-link to="/login">Login</router-link>
+          <router-link to="/">Main</router-link>
+        </div>
+        <router-view></router-view> -->
+    </div>
+
+<!-- <div class="container">
     <h1>로그인</h1>
     <form th:action="@{/login_proc}" method="post">
         <div class="form-group">
@@ -23,6 +248,80 @@
         <button type="button" class="btn btn-primary" onClick="location.href='signUp'">회원 가입</button>
     </form>
     <br/>
-</div>
+</div> -->
+
+
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script> -->
+<!-- <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script> -->
+<!-- <script src="https://unpkg.com/vue-router@3.0.1/dist/vue-router.js"></script> -->
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router@3.5.3/dist/vue-router.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vuetify@3.0.6/dist/vuetify.min.js"></script>
+
+
+<script>
+
+    //import Routes from './router'
+
+    //import logIn from "./logIn.vue";
+
+    // Vue.component('com-2',{
+    //     template : ''
+    // })
+
+
+
+    // var login = { template : '<div>11111111111</div>'};
+    // var reg = { template : '<div>2222222222222</div>'};
+
+    // var routers = [
+    //     {path : '/login', component:'<div>11111111111</div>'},
+    //     {path : '/reg', component:'<div>11111111111</div>'}
+    // ];
+
+    // var router = new VueRouter({
+    //     mode: 'history',
+    //     routers : routers
+    //     //routes: Routes,
+    // })
+
+    var LoginComponent = {
+      template: '<div>login</div>'
+    }
+    var MainComponent = {
+      template: '<div>main</div>'
+    }
+
+    var router = new VueRouter({ 
+      mode : 'history', 
+      routes: [
+        {
+          path: '/login',
+          component: LoginComponent
+        },
+        {
+          path: '/',
+          component: MainComponent
+        }
+      ]
+    });
+    
+    // var app = new Vue({
+    //     //render: h => h(App),
+    //     router: router
+    // }).$mount('#app');
+
+    new Vue({
+      el: '#app',
+      router: router,
+    });
+
+</script>
+
+
+
 </body>
 </html>

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+//import com.example.vscapp01.config.JwtTokenInfo;
 import com.example.vscapp01.dto.MemberDto;
+import com.example.vscapp01.dto.MemberLoginRequestDto;
 import com.example.vscapp01.service.MemberService;
 
 import lombok.AllArgsConstructor;
@@ -32,19 +34,19 @@ public class MainController{
     //}
     
     // @RequestMapping("/") 
-    // public String login() {
+    // public String logIn() {
 	// 	System.out.println("/1");
 		
     //     return "index.html";
     // }
 
     /**
-     * localhost:8080 시 login 으로 redirect
+     * localhost:8080 시 logIn 으로 redirect
      * @return
      */
     @GetMapping
     public String root() {
-        return "redirect:/login";
+        return "redirect:/logIn";
     }
 
     /**
@@ -52,8 +54,8 @@ public class MainController{
      * @return
      */
     @GetMapping("/logIn")
-    public String login(){
-        return "logIn";
+    public String logIn(){
+        return "index.html";
     }
     
     @GetMapping("/signUp")
@@ -81,4 +83,7 @@ public class MainController{
         return "api3"; 
     }  
 	
+
+    
+    
 }

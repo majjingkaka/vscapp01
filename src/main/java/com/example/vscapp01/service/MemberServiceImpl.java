@@ -4,12 +4,18 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 //import java.util.Optional;
+//import java.util.Optional;
+
+//import javax.management.relation.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+//import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +24,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.vscapp01.Components.JwtTokenProvider;
+//import com.example.vscapp01.Components.JwtTokenProvider;
+//import com.example.vscapp01.config.JwtTokenInfo;
 //import com.example.vscapp01.common.DefaultRes;
 //import com.example.vscapp01.common.ResponseMessage;
 //import com.example.vscapp01.common.StatusCode;
@@ -40,7 +49,7 @@ public class MemberServiceImpl implements MemberService{
     private MemberMapper memberMapper;
     
 
-
+    private final JwtTokenProvider jwtTokenProvider;
 
 
 
@@ -109,15 +118,15 @@ public class MemberServiceImpl implements MemberService{
 
 
 
-    private static final String ROLE_PREFIX = "ROLE_";
-
+    //private static final String ROLE_PREFIX = "ROLE_";
+    /*
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
         MemberDto memberDto = memberMapper.selectMember(memberId);
         
-        //if(memberDto == null) {
-        //    throw new UsernameNotFoundException("사용자 정보가 존재하지 않습니다.");
-        //}
+        if(memberDto == null) {
+           throw new UsernameNotFoundException("사용자 정보가 존재하지 않습니다.");
+        }
 
         //List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
         //roles.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
@@ -134,7 +143,7 @@ public class MemberServiceImpl implements MemberService{
 
         return springUser;
     }
-	
+	 */
 	
 	/*
     public Optional<MemberVo> findById(Long mbrNo) {
@@ -190,5 +199,66 @@ public class MemberServiceImpl implements MemberService{
         //memberMapper.createMember(memberDto);
         return new ResponseEntity<>(memberMapper.createMember(memberDto), header, HttpStatus.OK);
     }
+
+
+
+
+
+
+    public MemberDto findMemberInfoById(Long memberId) {
+        //Optional<String> optional = Optional.empty();
+        return memberMapper.findById(memberId);
+    }
+
+    public MemberDto findMemberInfoByEmail(String email) {
+        return memberMapper.findByEmail(email);
+    }
+
+
+
+
+
+    //private final MemberRepository memberRepository;
+    // AuthenticationManagerBuilder authenticationManagerBuilder;
+    // JwtTokenProvider jwtTokenProvider;
     
+    // @Transactional
+    // public JwtTokenInfo login(String memberId, String password) {
+    //     // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
+    //     // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
+    //     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberId, password);
+ 
+    //     // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
+    //     // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
+    //     Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+ 
+    //     // 3. 인증 정보를 기반으로 JWT 토큰 생성
+    //     JwtTokenInfo jwtTokenInfo = jwtTokenProvider.generateToken(authentication);
+ 
+    //      return jwtTokenInfo;
+    //  }
+
+    private static final String ROLE_PREFIX = "ROLE_";
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        MemberEntity MemberEntity = memberRepository.findByMemberId(username);
+
+        List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
+        
+        //List<Role> userRoleList = memberRepository.selectMemberRole(member);
+        
+        //for (Role role: userRoleList) {
+        //   roles.add(new SimpleGrantedAuthority(ROLE_PREFIX + role.getRoleName()));
+        //}
+        roles.add(new SimpleGrantedAuthority(ROLE_PREFIX + "MEMBER"));
+        
+        SpringUser springUser = new SpringUser(MemberEntity.getMemberId(), MemberEntity.getPassword(), roles, MemberEntity);
+
+        return springUser;
+    }
+    
+    public String createToken(MemberEntity MemberEntity){
+        
+        return jwtTokenProvider.createToken(MemberEntity.getMemberId(), MemberEntity.getRoles());
+    }
 }

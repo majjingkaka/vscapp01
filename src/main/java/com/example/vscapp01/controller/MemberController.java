@@ -1,5 +1,7 @@
 package com.example.vscapp01.controller;
 
+//import org.apache.catalina.security.SecurityUtil;
+
 //import java.util.HashMap;
 //import java.util.Map;
 
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.vscapp01.config.JwtTokenInfo;
+import com.example.vscapp01.dto.MemberDto;
+import com.example.vscapp01.dto.MemberLoginRequestDto;
 import com.example.vscapp01.entity.MemberEntity;
 //import com.example.vscapp01.entity.NewsEntity;
 import com.example.vscapp01.repository.MemberRepository;
@@ -19,6 +24,7 @@ import com.example.vscapp01.service.MemberService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 //import lombok.RequiredArgsConstructor;
+import javax.servlet.http.HttpServletResponse;
 
 //import com.content.NewsVo;
 
@@ -31,14 +37,19 @@ import javax.persistence.PersistenceContext;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 //import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
+
+import com.example.vscapp01.utils.SecurityUtil;
 
 @RestController
 @RequestMapping(value = "/member")
 public class MemberController {
 	
+
 	@Autowired
     MemberService memberService;
 	
@@ -150,7 +161,7 @@ public class MemberController {
     	
     	//https://congsong.tistory.com/51
     	MemberEntity memberVo = MemberEntity.builder()
-    			.id(id)
+    			.memberId(id)
     			.name(name)
     			.build();
     	memberRepository.save(memberVo);
@@ -220,4 +231,19 @@ public class MemberController {
 	 */
 		
 	
+
+	//  @GetMapping("/byId")
+	//  public ResponseEntity<MemberDto> findMemberInfoById() {
+	// 	 return ResponseEntity.ok(memberService.findMemberInfoById(SecurityUtil.getCurrentMemberId()));
+	//  }
+ 
+	//  @GetMapping("/{email}")
+	//  public ResponseEntity<MemberResponseDto> findMemberInfoByEmail(@PathVariable String email) {
+	// 	 return ResponseEntity.ok(memberService.findMemberInfoByEmail(email));
+	//  }
+
+
+
+	
+
 }

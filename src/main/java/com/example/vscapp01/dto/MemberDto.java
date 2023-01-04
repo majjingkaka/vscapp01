@@ -1,6 +1,8 @@
 package com.example.vscapp01.dto;
 
 import java.io.Serializable;
+//import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.*;
 
@@ -8,13 +10,15 @@ import org.hibernate.validator.constraints.Length;
 
 import lombok.*;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class MemberDto implements Serializable{
 
     @NotBlank(message = "아이디는 필수 입력 값입니다.")
-    private String id;
+    private String memberId;
 
     @NotBlank(message = "이름은 필수 입력 값입니다.")
     private String name;
@@ -32,14 +36,20 @@ public class MemberDto implements Serializable{
     @NotEmpty(message = "주소는 필수 입력 값입니다.")
     private String address;
 
+
+    //private List<String> roles = new ArrayList<>();
+    private List<String> roles;
+
+
     //https://wildeveloperetrain.tistory.com/101
     //https://gmlwjd9405.github.io/2018/12/25/difference-dao-dto-entity.html
-    @Builder
-    public MemberDto(String id, String name, String email, String password, String address) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.address = address;
-    }
+    
+//     @Builder
+//     public MemberDto(String memberId, String name, String email, String password, String address) {
+//         this.memberId = memberId;
+//         this.name = name;
+//         this.email = email;
+//         this.password = password;
+//         this.address = address;
+//     }
 }

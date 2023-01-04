@@ -1,6 +1,15 @@
 package com.example.vscapp01.entity;
 
+import java.util.ArrayList;
+//import java.util.Collection;
+import java.util.List;
+//import java.util.stream.Collectors;
+
 import javax.persistence.*;
+
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 //import jakarta.persistence.*;
 import lombok.*;
@@ -16,28 +25,35 @@ import lombok.*;
 @Entity(name = "member")
 @Table(name = "fa_memberinfo") // 기본적으로 클래스명(Camel Case)을 테이블명(Snake Case)으로 매핑합니다.
 @Data
-public class MemberEntity {
+public class MemberEntity{
 	
 	
 	@Id //pk명시
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment 명시 기본 키 생성을 DB에 위임 (Mysql)
-	@Column(name = "mbr_no")
-	private Long mbrNo; //적을땐 Integer가능
+	@Column(name = "member_no")
+	private Long memberNo; //적을땐 Integer가능
 	
 	/*
 	 * @GeneratedValue(startegy = GenerationType.IDENTITY) 기본 키 생성을 DB에 위임 (Mysql)
-	 * 
-	 * @GeneratedValue(startegy = GenerationType.SEQUENCE) DB시퀀스를 사용해서 기본 키 할당
-	 * (ORACLE)
-	 * 
+	 * @GeneratedValue(startegy = GenerationType.SEQUENCE) DB시퀀스를 사용해서 기본 키 할당(ORACLE)
 	 * @GeneratedValue(startegy = GenerationType.TABLE) 키 생성 테이블 사용 (모든 DB 사용 가능)
-	 * 
 	 * @GeneratedValue(startegy = GenerationType.AUTO) 선택된 DB에 따라 자동으로 전략 선택
 	 */
 	
 	
-	@Column(name = "id")
-    private String id;
+	@Column(name = "member_id", nullable = false)
+    private String memberId;
+	
+	// @ElementCollection(fetch = FetchType.EAGER)
+    // @Builder.Default
+    // private List<String> roles = new ArrayList<>();
+ 
+    // @Override
+    // public Collection<? extends GrantedAuthority> getAuthorities() {
+    //     return this.roles.stream()
+    //             .map(SimpleGrantedAuthority::new)
+    //             .collect(Collectors.toList());
+    // }
 	
 	@Column(name = "name")
     private String name;
@@ -47,6 +63,22 @@ public class MemberEntity {
 
 	@Column(name = "password", length = 255, nullable = false)
     private String password;
+
+
+	//@ElementCollection(fetch = FetchType.EAGER)
+    //@Builder.Default
+
+	//@ManyToOne //https://dev-coco.tistory.com/106
+    //@JoinColumn(name = "role")
+
+	@OneToMany(mappedBy = "memberId", orphanRemoval = true, cascade = CascadeType.ALL)
+	//@JoinColumn(name = "member_id")
+    private List<RoleEntity> roles = new ArrayList<>();
+	
+
+	//@Column(name = "roles")
+	//private List<RoleEntity> roles = new ArrayList<>();
+	
 
 	//https://www.icatpark.com/entry/JPA-%EA%B8%B0%EB%B3%B8-Annotation-%EC%A0%95%EB%A6%AC
 	//https://ddol.tistory.com/39
@@ -116,5 +148,5 @@ public class MemberEntity {
 	//Lombok @Data 어노테이션 “getter” “setter” 인식 안될때
 	//https://offetuoso.github.io/blog/develop/troubleshooting/spring/lombok-error/
 		
-		
+	
 }
