@@ -1,5 +1,12 @@
 package com.example.vscapp01.controller;
 
+
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +28,11 @@ import lombok.AllArgsConstructor;
 
 @Controller
 @RequestMapping(value = "/")
-@AllArgsConstructor
+//@AllArgsConstructor
 public class MainController{
-	
+	//private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     MemberService memberService;
 
@@ -55,6 +64,12 @@ public class MainController{
      */
     @GetMapping("/logIn")
     public String logIn(){
+        logger.trace("Trace");
+        logger.debug("Debug");
+        logger.info("Info");
+        logger.warn("Warn");
+        logger.error("Error");
+
         return "index.html";
     }
     
@@ -68,6 +83,28 @@ public class MainController{
         memberService.createMember(memberDto);
         return "redirect:/login";
     }
+
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	@RequestMapping("/vue") 
     public String vue() {

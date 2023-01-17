@@ -17,7 +17,7 @@
     </select>
 
     <insert id="createMember" parameterType="MemberDto">
-        INSERT INTO fa_memberinfo (id, name, password)
-        VALUES(#{id}, #{name}, #{password})
+        INSERT INTO fa_memberinfo (member_id, name, password)
+        VALUES(#{memberId}, #{name}, #{password})
     </insert>
 </mapper>

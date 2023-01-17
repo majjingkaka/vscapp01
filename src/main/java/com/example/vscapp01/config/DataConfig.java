@@ -17,10 +17,15 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Configuration
 @PropertySource("classpath:config/db.properties")
 @MapperScan(basePackages = {"com.example.vscapp01.mapper"})
 public class DataConfig {
+    private Logger logger = LogManager.getLogger(DataConfig.class);
 
     @Autowired
     Environment env;
@@ -30,12 +35,28 @@ public class DataConfig {
 
     @Bean
 	public DataSource dataSource() {
-        String profile = "dev";//env.getActiveProfiles()[0];
+        String profile = "dev";
+        
+        // if(env != null){
+        //     profile = env.getActiveProfiles()[0];
+        //     logger.info("profile::::::::"+profile);
+          
+        //     if("dev|local".indexOf(profile) < 0){
+        //         profile = "prod";
+        //     }
+        //     logger.info("profile::::::::"+profile);
+    
+        // }else{
+        //     profile = "prod";
+        // }
+        
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(env.getProperty(profile + ".main.driverClassName"));
 		dataSource.setUrl(env.getProperty(profile + ".main.url"));
 		dataSource.setUsername(env.getProperty(profile + ".main.username"));
 		dataSource.setPassword(env.getProperty(profile + ".main.password"));
+
+        logger.info("profile::::::::"+env.getProperty(profile + ".main.driverClassName"));
 
 		return dataSource;
 	}

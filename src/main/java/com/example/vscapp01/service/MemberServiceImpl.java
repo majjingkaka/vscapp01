@@ -20,7 +20,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,8 +53,9 @@ public class MemberServiceImpl implements MemberService{
 
     private final JwtTokenProvider jwtTokenProvider;
 
-
-
+    //private final PasswordEncoder passwordEncoder; //추가
+    @Autowired 
+    PasswordEncoder passwordEncoder; //추가
 
 	public List<MemberEntity> findAll() throws Exception{
         List<MemberEntity> members = new ArrayList<>();
@@ -177,7 +180,7 @@ public class MemberServiceImpl implements MemberService{
     @Transactional
     //@Override
     public ResponseEntity<Integer> createMember(MemberDto memberDto) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         
         //MemberEntity memberEntity = MemberEntity.builder()
         //.id(memberDto.getId())
@@ -196,7 +199,12 @@ public class MemberServiceImpl implements MemberService{
         header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
         //memberRepository.save(memberEntity);
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-        //memberMapper.createMember(memberDto);
+        // try{
+        //     memberMapper.createMember(memberDto);
+        // }catch(Exception e){
+        //     e.printStackTrace();
+        // }
+        
         return new ResponseEntity<>(memberMapper.createMember(memberDto), header, HttpStatus.OK);
     }
 

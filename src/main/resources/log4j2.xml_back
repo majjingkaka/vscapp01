@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="info" monitorInterval="30">
-    <Properties>
+<Configuration status="debug">
+
+    <!-- <Properties>
         <Property name="BASE_DIR">./logs</Property>
         <Property name="LOG_FORMAT">[%date{yyyy-MM-dd HH:mm:ss}] %level %logger{36}(%file:%line) - %msg%n</Property>
-    </Properties>
+    </Properties> -->
  
+    <Appenders>
+        <!-- 콜솔 -->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd hh:mm:ss} %5p [%c] %m%n"/>
+        </Console>
+    </Appenders>
+
+    <!-- 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT" follow="true">
             <PatternLayout pattern="${LOG_FORMAT}"/>
@@ -25,16 +34,21 @@
             </DefaultRolloverStrategy>
         </RollingFile>
     </Appenders>
- 
+  -->
+
+  
     <Loggers>
-        <Root level="info" additivity="false">
-            <AppenderRef ref="Console"/>
+
+        <Logger name="com.example.vscapp01" level="debug" additivity="false">
+            <AppenderRef ref="console"/>
+            <!-- <AppenderRef ref="File"/> -->
+        </Logger>
+
+        <Root level="debug" additivity="false">
+            <AppenderRef ref="console"/>
             <!-- <AppenderRef ref="File"/> -->
         </Root>
  
-        <Logger name="com.example" level="DEBUG" additivity="false">
-            <AppenderRef ref="Console"/>
-            <!-- <AppenderRef ref="File"/> -->
-        </Logger>
+        
     </Loggers>
 </Configuration>

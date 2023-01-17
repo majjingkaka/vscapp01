@@ -1,0 +1,40 @@
+<configuration scan="true" scanPeriod="30 seconds">
+    <!-- OFF - FATAL - ERROR - WARN - INFO - DEBUG - TRACE - (ALL) -->
+    <!-- ERROR < WARN < INFO < DEBUG < TRACE -->
+
+    <!-- pattern -->
+    <property name="LOG_PATTERN" value="%-5level %d{yy-MM-dd HH:mm:ss}[%thread] [%logger{0}:%line] - %msg%n"/>
+
+<!-- ConsoleAppender: 콘솔에 로그를 기록
+FileAppender: 파일에 로그를 기록
+RollingFileAppender: 여러 개의 파일을 순회하며 로그를 기록
+SMTPAppender: 로그를 메일로 기록
+DBAppender: 데이터베이스에 로그를 기록 -->
+
+    <!-- <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+	    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+	        <pattern>[%d{HH:mm:ss.SSS}][%-5level][%logger{36}.%method:line%line] - %msg%n</pattern>
+	    </encoder>
+    </appender> -->
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                ${LOG_PATTERN}
+            </Pattern>
+        </layout>
+    </appender>
+
+    <logger name="org.springframework" level="info" additivity="false">
+	    <appender-ref ref="console" />
+    </logger>
+
+    <!-- <root level="debug">
+        <appender-ref ref="CONSOLE"/>
+    </root> -->
+
+    <logger name="com.example" level="DEBUG" >
+        <appender-ref ref="console"/>
+    </logger>
+
+</configuration>
